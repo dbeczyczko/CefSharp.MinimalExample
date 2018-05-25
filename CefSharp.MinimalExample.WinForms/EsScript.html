@@ -1,0 +1,100 @@
+<script>
+
+    var inputControlsHelper = (function() {
+	    var setupInputOnChange = function(inputTypeName, onChange) {
+        $("input[type='" + inputTypeName + "']").bind('change', function() {
+			    onChange(this);
+			});
+	    };
+
+	    var setupSelect = function() {
+		    var onChange = function(element) {
+			    var options = element.options;
+			    var selected = options[element.selectedIndex].value;
+
+			    for(var opt, i = 0; opt = options[i]; i++) {
+		            if(opt.value == selected) {
+		                opt.setAttribute('selected', 'selected');
+		            }
+		            else {
+		                opt.removeAttribute('selected');
+		            }
+    		    }
+		    };
+
+		    $("select").bind('change', function() {
+				    onChange(this);
+			    });
+	    };
+
+	    var setupTextArea = function() {
+		    var onChange = function(element) {
+			    element.innerHTML = element.value; 
+		    };
+
+		    $("textarea").bind('input', function() {
+				    onChange(this);
+			    });
+	    };
+
+	    var setupTextBoxes = function() {
+		    setupInputOnChange('text', function(element) {
+			    element.setAttribute('value', element.value);
+		    });
+	    };
+
+	    var setupRadio = function () {
+	        setupInputOnChange('radio', function (element) {
+	            var isChecked = element.checked;
+	            $('input[name=' + $(element).attr('name') + '][type=radio]').each(function () {
+	                this.removeAttribute('checked');
+	            });
+	            if (isChecked) {
+	                element.setAttribute('checked', isChecked);
+	            }
+	        });
+	    };
+
+	    var setupCheckboxes = function() {
+		    setupInputOnChange('checkbox', function(element) {
+			    if (element.checked) {
+				    element.setAttribute('checked', element.checked);
+			    }
+			    else {
+				    element.removeAttribute('checked');
+			    }
+		    });
+	    };
+
+	    var setupAllControls = function() {
+		    setupCheckboxes();
+		    setupTextBoxes();
+		    setupRadio();
+		    setupSelect();
+		    setupTextArea();
+	    };
+
+	    return {
+		    setup: setupAllControls
+	    };
+    })();
+
+    // Hack for CKEditor because cannot edit list style
+    function textStyleChange() {
+        $("li span").each(function () {
+            var attr = $(this).attr("style");
+            var actualAttr = $(this).parents("li").attr("style");
+
+            if (actualAttr == "undefined") {
+                actualAttr = "";
+            }
+
+            $(this).parents("li").attr("style", attr + actualAttr);
+        });
+    }
+
+    $(document).ready(function() {
+        inputControlsHelper.setup();
+        textStyleChange();
+    });
+</script>

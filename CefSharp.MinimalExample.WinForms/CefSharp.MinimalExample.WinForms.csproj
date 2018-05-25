@@ -55,12 +55,43 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.8.2.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.8.2\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySql.Data, Version=6.10.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.10.7\lib\net452\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySqlConnector, Version=0.32.0.0, Culture=neutral, PublicKeyToken=d33d3e53aa5f8c92, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySqlConnector.0.32.0\lib\net45\MySqlConnector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OptimizedDataReader, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OptimizedDataReader.1.1.0\lib\net45\OptimizedDataReader.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Savage.Data, Version=5.4.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Savage.Data.5.4.2\lib\net45\Savage.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.3.0\lib\netstandard1.1\System.Buffers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -71,7 +102,27 @@
     <Compile Include="BrowserForm.Designer.cs">
       <DependentUpon>BrowserForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ChromiumBrowserController.cs" />
+    <Compile Include="ChromiumPrintTemplateViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChromiumPrintTemplateViewer.Designer.cs" />
     <Compile Include="Controls\ControlExtensions.cs" />
+    <Compile Include="e2DialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="e2DialogForm.Designer.cs" />
+    <Compile Include="e2Forms.cs" />
+    <Compile Include="e2WindowForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="e2WindowForm.Designer.cs" />
+    <Compile Include="kurwa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="kurwa.Designer.cs">
+      <DependentUpon>kurwa.cs</DependentUpon>
+    </Compile>
     <Compile Include="PrintPreview.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,11 +137,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="BrowserForm.resx">
       <DependentUpon>BrowserForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChromiumPrintTemplateViewer.resx" />
+    <EmbeddedResource Include="e2DialogForm.resx" />
+    <EmbeddedResource Include="e2WindowForm.resx" />
+    <EmbeddedResource Include="kurwa.resx">
+      <DependentUpon>kurwa.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PrintPreview.resx">
       <DependentUpon>PrintPreview.cs</DependentUpon>
@@ -99,6 +161,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +184,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\chromium-256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EsScript.html" />
+    <Content Include="jquery.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\CefSharp.Common.63.0.3\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.63.0.3\build\CefSharp.Common.targets')" />

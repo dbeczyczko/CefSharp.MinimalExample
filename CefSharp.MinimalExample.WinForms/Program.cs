@@ -14,7 +14,7 @@ namespace CefSharp.MinimalExample.WinForms
         public static void Main()
         {
             //For Windows 7 and above, best to include relevant app.manifest entries as well
-            Cef.EnableHighDPISupport();
+            // todo Cef.EnableHighDPISupport();
 
             var settings = new CefSettings()
             {
@@ -23,7 +23,7 @@ namespace CefSharp.MinimalExample.WinForms
             };
 
             //Perform dependency check to make sure all relevant resources are in our output directory.
-            Cef.Initialize(settings, performDependencyCheck: true, browserProcessHandler: null);
+            //todo Cef.Initialize(settings, performDependencyCheck: true, browserProcessHandler: null);
 
             var browser = new BrowserForm();
             Application.Run(browser);

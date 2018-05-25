@@ -10,6 +10,8 @@ namespace CefSharp.MinimalExample.WinForms
 {
     using System.Collections.Generic;
 
+    using e2App.PrintTemplates;
+
     public partial class BrowserForm : Form
     {
         private List<string> _printings = new List<string>();
@@ -29,31 +31,24 @@ namespace CefSharp.MinimalExample.WinForms
                 _printings.Add(allText);
             }
 
-            var browser = BuildChromiumWebBrowserWithLoadedHtml();
-            this.ShowPrintPreview(browser);
+            this.ShowPrintPreview();
         }
 
-        private void ShowPrintPreview(ChromiumWebBrowser browser)
-        {
-            var printPreview = new PrintPreview();
-            printPreview.Controls.Add(browser);
-            printPreview.Closed += PrintPreviewOnClosed;
-            printPreview.Show();
-        }
-
-        private void PrintPreviewOnClosed(object sender, EventArgs eventArgs)
-        {
-            var browser = this.BuildChromiumWebBrowserWithLoadedHtml();
-            ShowPrintPreview(browser);
-        }
-
-        private ChromiumWebBrowser BuildChromiumWebBrowserWithLoadedHtml()
+        private void ShowPrintPreview()
         {
             var printing = this.GetRandomPrinting();
-            var browser = new ChromiumWebBrowser(string.Empty);
-            browser.LoadHtml(printing, @"c:\");
-            return browser;
+
+            var chromiumPrintTemplateViewer = kurwa.ShowFor(printing, false, string.Empty, null);
+            chromiumPrintTemplateViewer.Closed += (sender, args) => ShowPrintPreview();
         }
+
+        //private ChromiumWebBrowser BuildChromiumWebBrowserWithLoadedHtml()
+        //{
+        //    var printing = this.GetRandomPrinting();
+        //    var browser = new ChromiumWebBrowser(string.Empty);
+        //    browser.LoadHtml(printing, @"c:\");
+        //    return browser;
+        //}
 
         private string GetRandomPrinting()
         {
