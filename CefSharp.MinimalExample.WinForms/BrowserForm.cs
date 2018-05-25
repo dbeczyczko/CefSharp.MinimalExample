@@ -9,6 +9,8 @@ using CefSharp.WinForms;
 namespace CefSharp.MinimalExample.WinForms
 {
     using System.Collections.Generic;
+    using System.Threading;
+    using System.Windows.Threading;
 
     using e2App.PrintTemplates;
 
@@ -32,13 +34,21 @@ namespace CefSharp.MinimalExample.WinForms
             }
 
             this.ShowPrintPreview();
+            this.ShowPrintPreview();
+            this.ShowPrintPreview();
         }
 
         private void ShowPrintPreview()
         {
-            var printing = this.GetRandomPrinting();
+            var dispatcher = Dispatcher.CurrentDispatcher;
 
+            var printing = this.GetRandomPrinting();
             var chromiumPrintTemplateViewer = kurwa.ShowFor(printing, false, string.Empty, null);
+            var timer = new System.Timers.Timer(1000);
+            timer.Elapsed += (sender, args) => dispatcher.Invoke(chromiumPrintTemplateViewer.Close);
+            timer.Start();
+            //new Timer(state => chromiumPrintTemplateViewer.Close(), new object(), Int32.MaxValue, 1000);
+
             chromiumPrintTemplateViewer.Closed += (sender, args) => ShowPrintPreview();
         }
 
